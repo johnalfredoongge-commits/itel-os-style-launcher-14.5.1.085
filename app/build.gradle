@@ -1,0 +1,21 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.ronald.itelstylelauncher'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId "com.ronald.itelstylelauncher"
+        minSdk 24
+        targetSdk 35
+        versionCode 1451085
+        versionName "14.5.1.085"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}

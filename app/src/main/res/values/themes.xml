@@ -1,0 +1,10 @@
+<resources>
+    <style name="Theme.ItelStyleLauncher" parent="android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:windowShowWallpaper">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">#99000000</item>
+        <item name="android:colorAccent">@color/launcher_accent</item>
+    </style>
+</resources>
