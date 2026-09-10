@@ -1,25 +1,28 @@
-# itel OS Style Launcher 14.5.1.085 (Unofficial)
+# FineLog Android
 
-Launcher Android independen bergaya modern, dibuat dari nol tanpa menyalin kode, APK, signature, logo, atau aset proprietari Shalltry Group.
+FineLog adalah aplikasi Android untuk mencatat aktivitas harian, tugas, dan catatan pribadi dengan dukungan offline-first serta fondasi sinkronisasi multi-perangkat.
 
-## Kompatibilitas
-- Android 7.0+ (minSdk 24)
-- targetSdk 35
-- versionName 14.5.1.085
-- package `com.ronald.itelstylelauncher`
+## Status branch
+Branch pengembangan: `finelog-android`
 
-## Fitur
-- Terdaftar sebagai HOME/launcher default
-- Daftar aplikasi terpasang yang dapat diluncurkan
-- Pencarian aplikasi
-- Jam dan tanggal Indonesia
-- Klik ikon untuk membuka aplikasi
-- Tekan lama: info aplikasi atau uninstall
-- Pilihan grid 4/5/6 kolom
-- Wallpaper sistem terlihat di belakang launcher
-- Tombol untuk memilih launcher default
+## Fitur tahap awal
+- Catatan lokal berbasis SQLite
+- UI responsif untuk berbagai ukuran layar Android
+- Tombol sinkronisasi menggunakan WorkManager
+- Dukungan Android 7.0+ (`minSdk 24`)
+- Target Android SDK 35
+- Build APK otomatis melalui GitHub Actions
 
-## Build APK
-GitHub Actions otomatis membangun APK setiap kali ada push ke branch `main`. Buka tab **Actions**, pilih **Build Android APK**, lalu unduh artifact `itel-style-launcher-14.5.1.085-debug-apk`.
+## Sinkronisasi multi-perangkat
+Struktur worker sinkronisasi sudah tersedia. Agar data benar-benar tersinkron antar-smartphone, tahap berikutnya adalah menghubungkan backend cloud, autentikasi pengguna, dan API sinkronisasi.
 
-> Nama itel adalah milik pemegang merek masing-masing. Proyek ini bukan aplikasi resmi Shalltry Group/itel.
+## Build
+Jalankan workflow **Build FineLog APK** atau gunakan Gradle:
+
+```bash
+gradle :app:assembleDebug
+```
+
+APK debug akan tersedia di:
+
+`app/build/outputs/apk/debug/app-debug.apk`

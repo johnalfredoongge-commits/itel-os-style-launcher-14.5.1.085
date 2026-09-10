@@ -1,9 +1,9 @@
-name: Build Android APK
+name: Build FineLog APK
 
 on:
   workflow_dispatch:
   push:
-    branches: [ "main" ]
+    branches: [ "finelog-android" ]
 
 jobs:
   build:
@@ -35,9 +35,9 @@ jobs:
       - name: Build debug APK
         run: gradle --no-daemon :app:assembleDebug --stacktrace
 
-      - name: Upload APK artifact
+      - name: Upload FineLog APK
         uses: actions/upload-artifact@v4
         with:
-          name: itel-style-launcher-14.5.1.085-debug-apk
+          name: finelog-android-debug-apk
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
