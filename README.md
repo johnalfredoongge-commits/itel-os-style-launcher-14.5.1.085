@@ -1,28 +1,57 @@
 # FineLog Android
 
-FineLog adalah aplikasi Android untuk mencatat aktivitas harian, tugas, dan catatan pribadi dengan dukungan offline-first serta fondasi sinkronisasi multi-perangkat.
+FineLog adalah aplikasi Android offline-first untuk catatan, tugas, kalender, dan sinkronisasi multi-perangkat.
 
-## Status branch
-Branch pengembangan: `finelog-android`
+## Status versi
 
-## Fitur tahap awal
-- Catatan lokal berbasis SQLite
-- UI responsif untuk berbagai ukuran layar Android
-- Tombol sinkronisasi menggunakan WorkManager
-- Dukungan Android 7.0+ (`minSdk 24`)
-- Target Android SDK 35
-- Build APK otomatis melalui GitHub Actions
+Branch: `finelog-android`  
+Package: `com.ronald.finelog`  
+Minimum Android: Android 7.0 (API 24)  
+Target SDK: 35  
+Versi aplikasi: 1.14.0-beta
 
-## Sinkronisasi multi-perangkat
-Struktur worker sinkronisasi sudah tersedia. Agar data benar-benar tersinkron antar-smartphone, tahap berikutnya adalah menghubungkan backend cloud, autentikasi pengguna, dan API sinkronisasi.
+## Fitur yang sudah tersedia
 
-## Build
-Jalankan workflow **Build FineLog APK** atau gunakan Gradle:
+- Catatan harian tersimpan lokal dengan SQLite.
+- Tugas/checklist dengan tanggal jatuh tempo.
+- Kalender untuk melihat tugas pada tanggal yang dipilih.
+- Mode offline-first: aplikasi tetap dapat dipakai tanpa internet.
+- WorkManager untuk sinkronisasi otomatis saat jaringan tersedia.
+- Login/daftar akun Firebase Authentication (email + password).
+- Sinkronisasi catatan dan tugas ke Cloud Firestore per akun pengguna.
+- Konflik data dasar menggunakan `updatedAt` (last-write-wins).
+- Navigasi Catatan, Tugas, Kalender, dan Profil.
+- Build APK otomatis melalui GitHub Actions setiap push ke branch `finelog-android`.
 
-```bash
-gradle :app:assembleDebug
+## Mengaktifkan sinkronisasi cloud
+
+Aplikasi tidak menyimpan kredensial Firebase di repository. Konfigurasi dimasukkan dari menu **Profil** agar source code tetap dapat dibagikan tanpa memasukkan kunci proyek ke Git.
+
+1. Buat atau pilih project di Firebase Console.
+2. Tambahkan aplikasi Android dengan package `com.ronald.finelog`.
+3. Aktifkan **Authentication > Sign-in method > Email/Password**.
+4. Buat database **Cloud Firestore**.
+5. Terapkan aturan dari file `firebase/firestore.rules`.
+6. Dari Firebase Project settings, ambil **Project ID**, **App ID**, dan **Web API Key**.
+7. Buka FineLog > **Profil**, masukkan ketiga nilai tersebut lalu tekan **Simpan Konfigurasi Cloud**.
+8. Daftar atau masuk menggunakan email dan password.
+9. Tekan **Sinkronkan**. Sinkronisasi juga berjalan otomatis saat jaringan tersedia.
+
+## Model data Firestore
+
+Data setiap akun dipisahkan berdasarkan UID:
+
+```text
+users/{uid}/notes/{noteId}
+users/{uid}/tasks/{taskId}
 ```
 
-APK debug akan tersedia di:
+Aturan keamanan memastikan pengguna yang sudah login hanya dapat membaca dan menulis datanya sendiri.
 
-`app/build/outputs/apk/debug/app-debug.apk`
+## Build APK
+
+GitHub Actions menjalankan `:app:assembleDebug` menggunakan Java 17, Android SDK 35, dan Gradle 8.7. Setelah workflow berhasil, APK tersedia sebagai artifact bernama `finelog-android-debug-apk`.
+
+## Catatan pengembangan berikutnya
+
+Tahap berikutnya: edit/hapus catatan, penghapusan tersinkron, notifikasi pengingat tugas, biometrik/PIN, penyempurnaan UI Material, backup/restore, dan build release bertanda tangan untuk distribusi.
