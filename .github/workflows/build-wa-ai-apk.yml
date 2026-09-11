@@ -1,0 +1,32 @@
+name: Build WA AI APK
+on:
+  push:
+    branches: [ wa-ai-bot-apk ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: wa-ai-native
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.10.2'
+      - name: Android SDK info
+        run: sdkmanager --list | head -40
+      - name: Build debug APK
+        run: gradle assembleDebug --stacktrace
+      - name: Rename APK
+        run: cp app/build/outputs/apk/debug/app-debug.apk WA-AI-Operator-itel-A50.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: WA-AI-Operator-itel-A50
+          path: wa-ai-native/WA-AI-Operator-itel-A50.apk
+          if-no-files-found: error
